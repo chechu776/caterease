@@ -14,6 +14,7 @@ section.login div.login{
     width: 25%;
     border-radius: 10px;
     background-color:white;
+    box-shadow: 2px 1px 7px 1px rgba(143, 140, 140, 0.537);
 }
 section.login div.login div.head{
     width: 100%;
@@ -457,7 +458,7 @@ section.login div.login form div.form textarea{
 #home{
     height: calc(100vh - 80px);
     width: 100%;
-    background: url(../images/bg6.avif);
+    background: url(../images/bg1.jpg);
     background-size: cover;
 }
 #home .topic{
@@ -478,14 +479,21 @@ section.login div.login form div.form textarea{
     font-size: 24px;
 }
 section.feature{
+    height: min-content;
+    background-color: #afffef;
+}
+section.feature div.cater{
     width: 90%;
     margin: 0 auto;
-    height: 600px;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    height: min-content;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
 }
 section.feature  div.block{
-    width: 33%;
+    width: 90%;
     margin-top: 50px;
     margin-right: 20px;
     height: 400px;
@@ -504,24 +512,162 @@ section.feature  div.block h1{
 section.feature  div.block img{
     width: 250px;
     margin-top: 20px;
+    border-radius: 8px;
 }
 section.feature div.block button{
     border: 1px solid #009879;
-    padding: 10px 16px;
+    padding:8px 16px;
     text-decoration: none;
     background-color: #009879;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #ffffff;
-    font-weight: 700;
     margin-top: 20px;
+    transition: all 0.5s ease-out;
 }
 section.feature div.block button:hover{
     background-color: white;
     color: #009879;
     border: 2px solid #009879;
+    font-weight: 700;
+}
+/* about page */
+.about-us {
+    padding: 50px 20px;
+    background-color: #afffef;
+    color: #008080;
+}
+.about-us .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.about-us h1{
+    text-align: center;
+    font-size: 50px;
+    text-decoration: underline;
+    margin-bottom: 50px;
+}
+.about-us h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+.about-us p {
+    font-size: 18px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+.about-us ul {
+    list-style: none;
+}
+.about-us ul li {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.about-us ul li strong {
+    color: #009879;
+}
+/* Menu */
+.menu-hero {
+    background-image: url('/images/bg1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+    padding: 100px 0;
 }
 
+.hero-content h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
 
+.hero-content p {
+    font-size: 24px;
+}
+
+/* Menu Section */
+.menu {
+    padding: 50px 20px;
+    background-color: #afffef;
+}
+
+.menu .container {
+    width: 90%;
+    margin: 0 auto;
+    /* display: flex;
+    justify-content: space-between; */
+    display: grid;
+    height: min-content;
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: auto;
+}
+
+.menu h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+    color: #333;
+    text-align: center;
+}
+
+.menu-item {
+    width: 90%;
+    margin-top: 50px;
+    margin-right: 20px;
+    height: 400px;
+    border-radius: 25px;
+    box-shadow: 2px 1px 7px 1px rgba(143, 140, 140, 0.537);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: white;
+}
+.menu-item img{
+    width: 250px;
+    height: 170px;
+    margin-top: 20px;
+    border-radius: 8px;
+}
+.menu-item h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #009879;
+}
+.menu-item p {
+    font-size: 16px;
+    margin-top: 10px;
+    color: #009879;
+    width: 90%;
+}
+.menu-item .price {
+    font-size: 18px;
+    color: #009879;
+    font-weight: bold;
+    float: right;
+    margin-right: 20px;
+}
+.menu-item .add-to-cart {
+    background-color: #009879;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease-out;
+}
+.menu-item .add-to-cart:hover {
+    background-color: #ffffff;
+    color: #009879;
+    border: 2px solid #009879;
+    font-weight: 700;
+}
+.order{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 25px;
+    width: 90%;
+}
 
 
 

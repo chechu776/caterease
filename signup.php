@@ -58,6 +58,7 @@
                     <hr>
                     <br>
                     <input class="btn2" type="submit" name="submit" value="Sign In">
+                    <p>Already have an account ?<a href="login.html">Log In</a></p>
                 </div>
             </form> 
         </div>
