@@ -32,33 +32,38 @@
     <header>
         <section class="wrapper">
             <div class="left">
-                <a href="home.html">CaterEase</a>
+                <a href="homeintex.html">CaterEase</a>
             </div>
         </section>
     </header>
     <section class="login">
         <div class="login">
             <div class="head">
-                <a href="login.html"><img src="images/back.png" alt=""></a>
+                <a href="login.php"><img src="images/back.png" alt=""></a>
                 <h1>Sign Up</h1>
                 <p></p>
             </div>
             <hr>
             <form action="signup.php" method="post">
                 <div>
-                    <input type="text" name="Name" placeholder="Name">
+                    <input type="text" name="Name" placeholder="Name" required>
                     <hr>
-                    <input type="text" name="phno" placeholder="Phone no">
+                    <input type="text" name="phno" placeholder="Phone no" required>
                     <hr>
-                    <input type="email" name="mail" placeholder="Email">
+                    <input type="email" name="mail" placeholder="Email" required>
                     <hr>
-                    <input type="password" name="pswd" placeholder="Password">
+                    <select name="typ" class="typ" id="" required>
+                        <option value="" disabled selected>Select User Type</option>
+                        <option value="User">User</option>
+                        <option value="CSP">Catering service provider</option>   
+                    </select>
+                    <input type="password" name="pswd" class="p" placeholder="Password" required>
                     <hr>
-                    <input type="password" placeholder="Confirm password">
+                    <input type="password" name="pswd1" placeholder="Confirm password" required>
                     <hr>
                     <br>
                     <input class="btn2" type="submit" name="submit" value="Sign In">
-                    <p>Already have an account ?<a href="login.html">Log In</a></p>
+                    <p>Already have an account ?<a href="login.php">Log In</a></p>
                 </div>
             </form> 
         </div>
@@ -74,12 +79,23 @@
             $phno=$_POST['phno'];
             $email=$_POST['mail'];
             $paswrd=$_POST['pswd'];
-            $sql="INSERT INTO user(`name`, `phno`, `email`, `password`) VALUES('$name','$phno','$email','$paswrd')";
+            $paswrd1=$_POST['pswd1'];
+            $type=$_POST['typ'];
+            if($paswrd===$paswrd1)
+            {
+            $sql="INSERT INTO user(`name`, `phno`, `email`, `password` ,usertype) VALUES('$name','$phno','$email','$paswrd','$type')";
+            $sql2="INSERT INTO `login`(`email`, `password`, `user_type`) VALUES ('$email','$paswrd','$type')";
             $data=mysqli_query($dbcon,$sql);
+            $data2=mysqli_query($dbcon,$sql2);
             if($data)
             {
-                echo "Data Inserted";
+                echo"<Script>alert('Data Inserted')</script>";
             }
+        }
+        else
+        {
+            echo"<Script>alert('Password does not match')</script>";
+        }
         }
     ?>
 </body>

@@ -47,6 +47,17 @@ section.login div.login div input{
     outline: none;
     font-size: 16px;
 }
+section.login div.login div input.p{
+    margin-top: 20px;
+}
+section.login div.login div select.typ{
+    border: none;
+    margin-top: 20px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-radius: 8px;
+}
 section.login div.login form div a.button{
     border: 1px solid #008080;
     border-radius: 20px;
@@ -132,6 +143,10 @@ header div.right div a:hover{
 header div.right div a img{
     width: 25px;
 }
+header div.right div.log{
+    display: flex;
+    align-items: center;
+}
 header div.right a.button{
     border: 1px solid white;
     padding: 8px 12px;
@@ -139,8 +154,47 @@ header div.right a.button{
     background-color: white;
     border-radius: 10px;
     color: #008080;
+    margin-left: 10px;
 }
 header div.right a.button:hover{
+    border: 2px solid white;
+    color: white;
+    background-color: #008080;
+    font-weight: 700x;
+}
+/* menu bar */
+header div.right1{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 50%;
+}
+header div.right1 div a{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    gap: 5px;
+    transition: all 0.5s linear;
+}
+header div.right1 div a:hover{
+    background-color: #e0e0e058;
+}
+header div.right1 div a img{
+    width: 25px;
+}
+header div.right1 a.button{
+    border: 1px solid white;
+    padding: 8px 12px;
+    text-decoration: none;
+    background-color: white;
+    border-radius: 10px;
+    color: #008080;
+    margin-left: 20px;
+}
+header div.right1 a.button:hover{
     border: 2px solid white;
     color: white;
     background-color: #008080;
@@ -148,12 +202,29 @@ header div.right a.button:hover{
 /* styling footer */
 footer{
     background-color:#008080 ;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 60px;
     width: 100%;
     color:white;
+}
+footer .foot{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+    height: 60px;
+}
+footer .contact{
+    display: flex;
+    flex-direction: column;
+}
+footer .contact a{
+    text-decoration: none;
+    color: #fff;
+}
+footer .contact a img{
+    width: 15px;
+    margin-right: 3px;
 }
 /* styling viewuser */
 *{
@@ -519,16 +590,23 @@ section.feature div.block button{
     padding:8px 16px;
     text-decoration: none;
     background-color: #009879;
+    color: #fff;
     border-radius: 5px;
-    color: #ffffff;
     margin-top: 20px;
-    transition: all 0.5s ease-out;
+    transition: all 0.3s ease-out;
+}
+section.feature div.block button a{
+    text-decoration: none;
+    color: #fff;
 }
 section.feature div.block button:hover{
     background-color: white;
     color: #009879;
     border: 2px solid #009879;
     font-weight: 700;
+}
+section.feature div.block button a:hover{
+    color: #009879;
 }
 /* about page */
 .about-us {
@@ -567,12 +645,12 @@ section.feature div.block button:hover{
 }
 /* Menu */
 .menu-hero {
-    background-image: url('/images/bg1.jpg');
+    background-image: url('../images/bg1.jpg');
     background-size: cover;
     background-position: center;
     color: #fff;
     text-align: center;
-    padding: 100px 0;
+    padding: 150px 0;
 }
 
 .hero-content h1 {
@@ -585,29 +663,26 @@ section.feature div.block button:hover{
 }
 
 /* Menu Section */
-.menu {
+.menu1 {
     padding: 50px 20px;
     background-color: #afffef;
 }
-
-.menu .container {
+.menu1 .container {
     width: 90%;
     margin: 0 auto;
     /* display: flex;
     justify-content: space-between; */
     display: grid;
     height: min-content;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(2,1fr);
     grid-template-rows: auto;
 }
-
-.menu h2 {
+.menu1 h2 {
     font-size: 36px;
     margin-bottom: 30px;
     color: #333;
     text-align: center;
 }
-
 .menu-item {
     width: 90%;
     margin-top: 50px;
@@ -622,8 +697,8 @@ section.feature div.block button:hover{
     background-color: white;
 }
 .menu-item img{
-    width: 250px;
-    height: 170px;
+    width: 400px;
+    height: 200px;
     margin-top: 20px;
     border-radius: 8px;
 }
@@ -655,11 +730,24 @@ section.feature div.block button:hover{
     border-radius: 5px;
     transition: all 0.3s ease-out;
 }
+.menu-item .add-to-cart a{
+    color: #fff;
+    text-decoration: none;
+}
+.menu-item .add-to-cart a:hover{
+    color: #009879;
+}
 .menu-item .add-to-cart:hover {
     background-color: #ffffff;
     color: #009879;
     border: 2px solid #009879;
     font-weight: 700;
+}
+.ord{
+    height: 500px;
+    display: flex;
+    align-items: center;
+    background-color: #afffef;
 }
 .order{
     display: flex;
@@ -668,6 +756,59 @@ section.feature div.block button:hover{
     margin-top: 25px;
     width: 90%;
 }
+/* order styling */
 
 
-
+.order-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: 0 auto;
+}
+.order-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+.form-group label {
+    display: block;
+    font-weight: bold;
+    color: #555;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+.order-container button { 
+    background-color: #009879;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: all 0.3s ease-out;
+}
+.order-container button:hover{
+    background-color: #ffffff;
+    color: #009879;
+    border: 2px solid #009879;
+    font-weight: 700;
+}
+.order-container button a{
+    color: #fff;
+    text-decoration: none;
+}
+.order-container button a:hover{
+    color: #009879;
+}
