@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="viewbooking.html">
+                    <a href="viewbooking.php">
                         <img src="images/booking.png" alt="">
                         <span>View Bookings</span>
                     </a>
@@ -69,13 +69,6 @@
                         <th>Email</th>
                         <th>Action</th>
                     </tr>
-                    <tr class="hover">
-                        <td>12</td>
-                        <td>sfgsd</td>
-                        <td>21425351</td>
-                        <td>svasd@gmail.com</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
                     <?php
                         $dbcon=mysqli_connect("localhost","root","","caterease");
                         if (!$dbcon) {
@@ -89,11 +82,12 @@
                             while($rowcount>0)
                             {
                                 $row=mysqli_fetch_array($data);
-                                echo"<tr>";
+                                echo"<tr class='hover'>";
                                 echo"<td>".$row['userid']."</td>";
                                 echo"<td>".$row['name']."</td>";
                                 echo"<td>".$row['phno']."</td>";
                                 echo"<td>".$row['email']."</td>";
+                                echo"<td><a href=''><div class='action'><img src='images/block-user.png' alt=''>Block<img src='images/unlock.png' alt=''>Unblock</div></a></td>";
                                 $rowcount--;
                             }
                         }

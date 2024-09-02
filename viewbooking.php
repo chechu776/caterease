@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="style/style.css">
 </head>
 <body class="adm">
     <div class="sidebar">
@@ -12,19 +12,19 @@
         </div>
         <ul class="menu">
             <li class="active">
-                <a href="admindashboard.html">
+                <a href="admindashboard.php">
                     <img src="images/user.png" alt="">
                     <span>Manage User</span>
                 </a>
             </li>
             <li>
-                <a href="managecsp.html">
+                <a href="managecsp.php">
                     <img src="images/food-service.png" alt="">
                     <span>Manage CSP</span>
                 </a>
             </li>
             <li>
-                <a href="viewbooking.html">
+                <a href="viewbooking.php">
                     <img src="images/booking.png" alt="">
                     <span>View Bookings</span>
                 </a>

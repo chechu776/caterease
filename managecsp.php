@@ -12,13 +12,13 @@
         </div>
         <ul class="menu">
             <li class="active">
-                <a href="admindashboard.html">
+                <a href="admindashboard.php">
                     <img src="images/user.png" alt="">
                     <span>Manage User</span>
                 </a>
             </li>
             <li>
-                <a href="managecsp.html">
+                <a href="managecsp.php">
                     <img src="images/food-service.png" alt="">
                     <span>Manage CSP</span>
                 </a>
