@@ -47,14 +47,14 @@
             }
 
             // Phone number validation (10 digits)
-            const phnoRegex = /^\d{10}$/;
+            const phnoRegex = /^[6-9]\d{9}$/;
             if (!phnoRegex.test(phno)) {
                 alert("Please enter a valid 10-digit phone number.");
                 return false;
             }
 
             // Email validation
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             if (!emailRegex.test(email)) {
                 alert("Please enter a valid email address.");
                 return false;
