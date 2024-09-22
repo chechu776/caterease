@@ -1,3 +1,35 @@
+<?php
+        $dbcon=mysqli_connect("localhost","root","","caterease");
+        if (!$dbcon) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        if(isset($_POST['submit']))
+        {
+            $email=$_POST['mail'];
+            $paswrd=$_POST['pswd'];
+            $sql="SELECT * FROM `login` WHERE email='$email' and password ='$paswrd'";
+            $data=mysqli_query($dbcon,$sql);
+            if($data)
+            {   
+                $row = mysqli_fetch_assoc($data);
+                if($row){
+                    if ($row['user_type'] == 0) {
+                        header('Location: home.html');
+                        exit();
+                    } elseif ($row['user_type'] == 1) {
+                        header('Location: cspdashboard.php');
+                        exit();
+                    }
+                }
+                else{
+                    echo"<Script>alert('User not found')</script>";
+                }
+            }
+            else{
+                echo"<Script>alert('Incorrect email or password')</script>";
+            }
+        }
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,31 +88,5 @@
             </form>
         </div>
     </section>
-    <?php
-        $dbcon=mysqli_connect("localhost","root","","caterease");
-        if (!$dbcon) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-        if(isset($_POST['submit']))
-        {
-            $email=$_POST['mail'];
-            $paswrd=$_POST['pswd'];
-            $sql="SELECT * FROM `login` WHERE email='$email' and password ='$paswrd'";
-            $data=mysqli_query($dbcon,$sql);
-            if($data)
-            {   
-                $row=mysqli_num_rows($data);
-                if($row > 0){
-                    header('Location: home.html');
-                    exit();
-                }
-                else
-                echo"<Script>alert('User not found')</script>";
-            }
-            else{
-                echo"<Script>alert('Incorrect email or password')</script>";
-            }
-        }
-    ?>
 </body>
 </html>

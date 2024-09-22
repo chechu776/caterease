@@ -87,8 +87,13 @@
                                 echo"<td>".$row['name']."</td>";
                                 echo"<td>".$row['phno']."</td>";
                                 echo"<td>".$row['email']."</td>";
-                                echo"<td><a href=''><div class='action'><img src='images/block-user.png' alt=''>Block<img src='images/unlock.png' alt=''>Unblock</div></a></td>";
-                                $rowcount--;
+                                if ($row['status'] == "active") {
+                                    // User is active, show block option
+                                    echo "<a href='admin_dashboard.php?action=block&id=".$row['userid']."'><div class='action'><img src='images/block-user.png' alt=''>Block</div></a>";
+                                } else {
+                                    // User is blocked, show unblock option
+                                    echo "<a href='admin_dashboard.php?action=unblock&id=".$row['userid']."'><div class='action'><img src='images/unlock.png' alt=''>Unblock</div></a>";
+                                }
                             }
                         }
                     ?>
