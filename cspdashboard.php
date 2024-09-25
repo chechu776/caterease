@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 <body class="adm">
-    <div class="sidebar">
-        <div class="logo">
-        </div>
-        <ul class="menu">
+        <div class="sidebar">
+            <div class="logo">
+            </div>
+            <ul class="menu">
             <li>
                 <a href="viewbooking.html">
                     <img src="images/booking.png" alt="">
@@ -33,16 +33,15 @@
                 <a href="feedback.html">
                     <img src="images/feedback.png" alt="">
                     <span>Add Feedback</span>
-                </a>
             </li>
-            <li class="logout">
-                <a href="">
-                    <img src="images/logout.png" alt="">
-                    <span>logout</span>
-                </a>
-            </li>
-        </ul>
-    </div>
+                <li class="logout">
+                    <a href="">
+                        <img src="images/logout.png" alt="">
+                        <span>logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
     <div class="maincontent">
         <div class="wrapper">
             <div class="title">

@@ -59,7 +59,6 @@
             <div class="vuser">
                 <div class="head">
                     <h1>Users</h1>
-                    <a href="adduser.html" class="button">Add Users</a>
                 </div>
                 <table>
                     <tr>
@@ -70,33 +69,42 @@
                         <th>Action</th>
                     </tr>
                     <?php
-                        $dbcon=mysqli_connect("localhost","root","","caterease");
-                        if (!$dbcon) {
-                            die("Connection failed: " . mysqli_connect_error());
-                        }
-                        $sql="SELECT * FROM user";
-                        $data=mysqli_query($dbcon,$sql);
-                        if($data)
-                        {
-                            $rowcount=mysqli_num_rows($data);
-                            while($rowcount>0)
-                            {
-                                $row=mysqli_fetch_array($data);
-                                echo"<tr class='hover'>";
-                                echo"<td>".$row['userid']."</td>";
-                                echo"<td>".$row['name']."</td>";
-                                echo"<td>".$row['phno']."</td>";
-                                echo"<td>".$row['email']."</td>";
-                                if ($row['status'] == "active") {
-                                    // User is active, show block option
-                                    echo "<a href='admin_dashboard.php?action=block&id=".$row['userid']."'><div class='action'><img src='images/block-user.png' alt=''>Block</div></a>";
-                                } else {
-                                    // User is blocked, show unblock option
-                                    echo "<a href='admin_dashboard.php?action=unblock&id=".$row['userid']."'><div class='action'><img src='images/unlock.png' alt=''>Unblock</div></a>";
-                                }
-                            }
-                        }
-                    ?>
+$dbcon = mysqli_connect("localhost", "root", "", "caterease");
+if (!$dbcon) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
+$data = mysqli_query($dbcon, $sql);
+
+if (mysqli_num_rows($data) > 0) {  // Corrected this line
+    while ($row = mysqli_fetch_assoc($data)) {
+        $id = $row["user_id"];
+        echo "<tr class='hover'>";
+        echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; // Sanitize output
+        echo "<td>" . htmlspecialchars($row['name']) . "</td>"; // Sanitize output
+        echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; // Sanitize output
+        echo "<td>" . htmlspecialchars($row['email']) . "</td>"; // Sanitize output
+        echo "<td>";
+        
+        if ($row['status'] == "active") {
+            // User is active, show block option
+            echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='action'>Block</button></form>";
+        } else {
+            // User is blocked, show unblock option
+            echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='action'>UnBlock</button></form>";
+        }
+
+        echo "</td>";
+        echo "</tr>";
+    }
+} else {
+    echo "<tr><td colspan='5'>No users found.</td></tr>"; // Provide feedback if no users
+}
+
+mysqli_close($dbcon); // Close the database connection
+?>
+
                 </table>
             </div>
         </div>

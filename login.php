@@ -20,6 +20,9 @@
                         header('Location: cspdashboard.php');
                         exit();
                     }
+                    else{
+                        header('Location: admindashboard.php');
+                    }
                 }
                 else{
                     echo"<Script>alert('User not found')</script>";
