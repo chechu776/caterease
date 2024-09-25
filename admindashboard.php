@@ -69,40 +69,39 @@
                         <th>Action</th>
                     </tr>
                     <?php
-$dbcon = mysqli_connect("localhost", "root", "", "caterease");
-if (!$dbcon) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+                        $dbcon = mysqli_connect("localhost", "root", "", "caterease");
+                        if (!$dbcon) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
 
-$sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
-$data = mysqli_query($dbcon, $sql);
+                        $sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
+                        $data = mysqli_query($dbcon, $sql);
 
-if (mysqli_num_rows($data) > 0) {  
-    while ($row = mysqli_fetch_assoc($data)) {
-        $id = $row["user_id"];
-        echo "<tr class='hover'>";
-        echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
-        echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
-        echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; 
-        echo "<td>" . htmlspecialchars($row['email']) . "</td>"; 
-        echo "<td>";
-        
-        if ($row['status'] == "active") {
-            echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='action'>Block</button></form>";
-        } else {
-            echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='action'>UnBlock</button></form>";
-        }
+                        if (mysqli_num_rows($data) > 0) {  
+                            while ($row = mysqli_fetch_assoc($data)) {
+                                $id = $row["user_id"];
+                                echo "<tr class='hover'>";
+                                echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['email']) . "</td>"; 
+                                echo "<td>";
+                                
+                                if ($row['status'] == "active") {
+                                    echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='action'>Block</button></form>";
+                                } else {
+                                    echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='action'>UnBlock</button></form>";
+                                }
 
-        echo "</td>";
-        echo "</tr>";
-    }
-} else {
-    echo "<tr><td colspan='5'>No users found.</td></tr>";
-}
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No users found.</td></tr>";
+                        }
 
-mysqli_close($dbcon);
-?>
-
+                        mysqli_close($dbcon);
+                        ?>
                 </table>
             </div>
         </div>
