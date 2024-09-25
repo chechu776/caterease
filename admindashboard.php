@@ -77,21 +77,19 @@ if (!$dbcon) {
 $sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
 $data = mysqli_query($dbcon, $sql);
 
-if (mysqli_num_rows($data) > 0) {  // Corrected this line
+if (mysqli_num_rows($data) > 0) {  
     while ($row = mysqli_fetch_assoc($data)) {
         $id = $row["user_id"];
         echo "<tr class='hover'>";
-        echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; // Sanitize output
-        echo "<td>" . htmlspecialchars($row['name']) . "</td>"; // Sanitize output
-        echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; // Sanitize output
-        echo "<td>" . htmlspecialchars($row['email']) . "</td>"; // Sanitize output
+        echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
+        echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
+        echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; 
+        echo "<td>" . htmlspecialchars($row['email']) . "</td>"; 
         echo "<td>";
         
         if ($row['status'] == "active") {
-            // User is active, show block option
             echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='action'>Block</button></form>";
         } else {
-            // User is blocked, show unblock option
             echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='action'>UnBlock</button></form>";
         }
 
@@ -99,10 +97,10 @@ if (mysqli_num_rows($data) > 0) {  // Corrected this line
         echo "</tr>";
     }
 } else {
-    echo "<tr><td colspan='5'>No users found.</td></tr>"; // Provide feedback if no users
+    echo "<tr><td colspan='5'>No users found.</td></tr>";
 }
 
-mysqli_close($dbcon); // Close the database connection
+mysqli_close($dbcon);
 ?>
 
                 </table>
