@@ -318,6 +318,19 @@ div.vuser table tr td button{
     display: flex;
     align-items: center;
 }
+div.vuser table tr td button.approve{
+    color: #009879;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+    font-weight: 700;
+
+}
+div.vuser table tr td button.approve:hover{
+    background-color: #009879;
+    color: white;
+}
 div.vuser table tr td button.block{
     color: #009879;
     font-weight: 700;

@@ -89,8 +89,15 @@
                                 echo "<td>";
                                 
                                 if ($row['status'] == "active") {
-                                    echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='block'><img src='images/block-user.png'> Block</button></form>";
-                                } else {
+                                    echo "<form method='post' style='display: flex; align-items: center; padding-left: 40px'>
+                                    <button name='blockuser' value='{$id}' type='submit' class='block' style='margin-right: 10px;'>
+                                    <img src='images/block-user.png'> Block</button>";
+                                    if($row2['status']=='requested')
+                                    {
+                                        echo"<button name='approveuser' class='approve'>Approve</button>";
+                                    }
+                                    echo"</form>";
+} else {
                                     echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='unblock'><img src='images/unlock.png'> UnBlock</button></form>";
                                 }
 
