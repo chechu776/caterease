@@ -8,20 +8,31 @@
             $email=$_POST['mail'];
             $paswrd=$_POST['pswd'];
             $sql="SELECT * FROM `login` WHERE email='$email' and password ='$paswrd'";
+            
             $data=mysqli_query($dbcon,$sql);
-            if($data)
+            $sql2="SELECT * FROM user WHERE email='$email'";
+            $data2=mysqli_query($dbcon,$sql2);
+            if($data $$ $data2)
             {   
                 $row = mysqli_fetch_assoc($data);
+                $row1 = mysqli_fetch_assoc($data2);
                 if($row){
-                    if ($row['user_type'] == 0) {
-                        header('Location: home.html');
-                        exit();
-                    } elseif ($row['user_type'] == 1) {
-                        header('Location: cspdashboard.php');
-                        exit();
+                    if($row1['status']==='active')
+                    {
+                        if ($row['user_type'] == 0) {
+                            header('Location: home.html');
+                            exit();
+                        } 
+                        else if ($row['user_type'] == 1) {
+                            header('Location: cspdashboard.php');
+                            exit();
+                        }
+                        else{
+                            header('Location: admindashboard.php');
+                        }
                     }
                     else{
-                        header('Location: admindashboard.php');
+                        echo"<Script>alert('User is blocked')</script>";
                     }
                 }
                 else{

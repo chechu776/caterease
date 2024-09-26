@@ -73,13 +73,11 @@
                         if (!$dbcon) {
                             die("Connection failed: " . mysqli_connect_error());
                         }
-
                         $sql = "SELECT * FROM `user` WHERE `usertype` = 'User'";
                         $data = mysqli_query($dbcon, $sql);
-
                         if (mysqli_num_rows($data) > 0) {  
                             while ($row = mysqli_fetch_assoc($data)) {
-                                $id = $row["user_id"];
+                                $id = $row["userid"];
                                 echo "<tr class='hover'>";
                                 echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
                                 echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
@@ -88,9 +86,9 @@
                                 echo "<td>";
                                 
                                 if ($row['status'] == "active") {
-                                    echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='action'>Block</button></form>";
+                                    echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='block'><img src='images/block-user.png'> Block</button></form>";
                                 } else {
-                                    echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='action'>UnBlock</button></form>";
+                                    echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='unblock'><img src='images/unlock.png'> UnBlock</button></form>";
                                 }
 
                                 echo "</td>";
@@ -99,7 +97,20 @@
                         } else {
                             echo "<tr><td colspan='5'>No users found.</td></tr>";
                         }
+                        if (isset($_POST['blockuser']) || isset($_POST['unblockuser'])) {
+                            $user_id = isset($_POST['blockuser']) ? $_POST['blockuser'] : $_POST['unblockuser'];
+                            $new_status = isset($_POST['blockuser']) ? 'inactive' : 'active';
 
+                            $sql1 = "UPDATE user SET status = '$new_status' WHERE userid = $user_id";
+                            $result1 = mysqli_query($dbcon, $sql1);
+
+                            if ($result1) {
+                                header("Location: admindashboard.php");
+                                exit(); 
+                            } else {
+                                echo "Error updating status: " . mysqli_error($dbcon);
+                            }
+                        }
                         mysqli_close($dbcon);
                         ?>
                 </table>

@@ -59,7 +59,6 @@
         <div class="vuser">
             <div class="head">
                 <h1>Catering Service Providers</h1>
-                <a href="addcsp.html" class="button">Add CSP</a>
             </div>
             <table>
                 <tr>
@@ -69,69 +68,51 @@
                     <th>Address</th>
                     <th>Action</th>
                 </tr>
-                <tr class="hover">
-                    <td>sfgsd</td>
-                    <td>21425351</td>
-                    <td>svasd@gmail.com</td>
-                    <td>Kochi</td>
-                    <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                </tr>
-                <tr class="hover">
-                    <td>sfgsd</td>
-                    <td>2112311</td>
-                    <td>bdfbfd@gmail.com</td>
-                    <td>Kochi</td>
-                    <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
-                    <tr class="hover">
-                        <td>szdbz</td>
-                        <td>2112311</td>
-                        <td>bdfbfd@gmail.com</td>
-                        <td>Kochi</td>
-                        <td><a href=""><div class="action"><img src="images/block-user.png" alt="">Block<img src="images/unlock.png" alt="">Unblock</div></a></td>
-                    </tr>
+                <?php
+                        $dbcon = mysqli_connect("localhost", "root", "", "caterease");
+                        if (!$dbcon) {
+                            die("Connection failed: " . mysqli_connect_error());
+                        }
+                        $sql = "SELECT * FROM `user` WHERE `usertype` = 'CSP'";
+                        $data = mysqli_query($dbcon, $sql);
+                        if (mysqli_num_rows($data) > 0) {  
+                            while ($row = mysqli_fetch_assoc($data)) {
+                                $id = $row["userid"];
+                                echo "<tr class='hover'>";
+                                echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row['email']) . "</td>"; 
+                                echo "<td>";
+                                
+                                if ($row['status'] == "active") {
+                                    echo "<form method='post'><button name='blockuser' value='{$id}' type='submit' class='block'><img src='images/block-user.png'> Block</button></form>";
+                                } else {
+                                    echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='unblock'><img src='images/unlock.png'> UnBlock</button></form>";
+                                }
+
+                                echo "</td>";
+                                echo "</tr>";
+                            }
+                        } else {
+                            echo "<tr><td colspan='5'>No users found.</td></tr>";
+                        }
+                        if (isset($_POST['blockuser']) || isset($_POST['unblockuser'])) {
+                            $user_id = isset($_POST['blockuser']) ? $_POST['blockuser'] : $_POST['unblockuser'];
+                            $new_status = isset($_POST['blockuser']) ? 'inactive' : 'active';
+
+                            $sql1 = "UPDATE user SET status = '$new_status' WHERE userid = $user_id";
+                            $result1 = mysqli_query($dbcon, $sql1);
+
+                            if ($result1) {
+                                header("Location: managecsp.php");
+                                exit(); 
+                            } else {
+                                echo "Error updating status: " . mysqli_error($dbcon);
+                            }
+                        }
+                        mysqli_close($dbcon);
+                        ?>
             </table>
         </div>
     </div>

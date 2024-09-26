@@ -308,11 +308,32 @@ div.vuser table  tr.hover:nth-child(3){
     font-weight: bold;
     color: #009879;
 }
-div.vuser table tr td div.action{
+div.vuser table tr td button{
+    padding: 8px 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
+div.vuser table tr td button.block{
+    color: #009879;
+    font-weight: 700;
+}
+div.vuser table tr td button.block:hover{
+    background-color: red;
+}
+div.vuser table tr td button.unblock{
+    color: #009879;
+    font-weight: 700;
+    
+}
+div.vuser table tr td button.unblock:hover{
+    background-color: rgb(0, 255, 149);
+}
+
 div.vuser table tr td img{
     width: 22px;
 }

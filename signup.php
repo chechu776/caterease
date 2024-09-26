@@ -1,42 +1,52 @@
 <?php
-    $dbcon = mysqli_connect("localhost", "root", "", "caterease");
-    if (!$dbcon) {
-        die("Connection failed: " . mysqli_connect_error());
+$dbcon = mysqli_connect("localhost", "root", "", "caterease");
+if (!$dbcon) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_POST['submit'])) {
+    $name = $_POST['Name'];
+    $phno = $_POST['phno'];
+    $email = $_POST['mail'];
+    $paswrd = $_POST['pswd'];
+    $paswrd1 = $_POST['pswd1'];
+    $type = $_POST['typ'];
+
+    if ($type == 'User') {
+        $usertype = 0;
+        $status = "active";
+    } else {
+        $usertype = 1;
+        $status = "active";
+    }
+    if ($type == 'CSP') {
+        $csp_name = $_POST['csp_name'];
+        $address = $_POST['address'];
     }
 
-    if (isset($_POST['submit'])) {
-        $name = $_POST['Name'];
-        $phno = $_POST['phno'];
-        $email = $_POST['mail'];
-        $paswrd = $_POST['pswd'];
-        $paswrd1 = $_POST['pswd1'];
-        $type = $_POST['typ'];
-
-        if ($type == 'User') {
-            $usertype = 0;
-            $status="active";
-        } else {
-            $usertype = 1;
-            $status="active";
+    if ($paswrd == $paswrd1) {
+        $sql = "INSERT INTO user(`name`, `phno`, `email`, `password`, `usertype`,`status`) 
+                VALUES ('$name', '$phno', '$email', '$paswrd', '$type','$status')";
+        $sql2 = "INSERT INTO `login`(`email`, `password`, `user_type`) 
+                 VALUES ('$email', '$paswrd', '$usertype')";
+        if ($type == 'CSP') {
+            $sql3 = "INSERT INTO `csp_table`(`csp_name`, `address`,) 
+                     VALUES ('$csp_name', '$address')";
+            mysqli_query($dbcon, $sql3);
         }
+        
+        $data = mysqli_query($dbcon, $sql);
+        mysqli_query($dbcon, $sql2);
 
-        if ($paswrd == $paswrd1) {
-            $sql = "INSERT INTO user(`name`, `phno`, `email`, `password`, `usertype`,`status`) 
-                    VALUES ('$name', '$phno', '$email', '$paswrd', '$type','$status')";
-            $sql2 = "INSERT INTO `login`(`email`, `password`, `user_type`) 
-                     VALUES ('$email', '$paswrd', '$usertype')";
-            $data = mysqli_query($dbcon, $sql);
-            mysqli_query($dbcon, $sql2);
-
-            if ($data) {
-                echo "<script>alert('Data Inserted');</script>";
-                header('Location: login.php');
-                exit(); 
-            }
-        } else {
-            echo "<script>alert('Passwords do not match');</script>";
+        if ($data) {
+            echo "<script>alert('Data Inserted');</script>";
+            header('Location: login.php');
+            exit(); 
         }
+    } else {
+        echo "<script>alert('Passwords do not match');</script>";
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +78,9 @@
         .error {
             color: red;
             font-size: 0.9em;
+        }
+        .csp-fields {
+            display: none; /* Hidden by default */
         }
     </style>
     <script>
@@ -114,6 +127,16 @@
 
             return true;
         }
+
+        function toggleCspFields() {
+            const userType = document.forms["signupForm"]["typ"].value;
+            const cspFields = document.getElementById("cspFields");
+            if (userType === "CSP") {
+                cspFields.style.display = "block"; // Show CSP fields
+            } else {
+                cspFields.style.display = "none"; // Hide CSP fields
+            }
+        }
     </script>
 </head>
 <body>
@@ -140,17 +163,23 @@
                     <hr>
                     <input type="email" name="mail" placeholder="Email" required>
                     <hr>
-                    <select name="typ" class="typ" required>
+                    <select name="typ" class="typ" required onchange="toggleCspFields()">
                         <option value="" disabled selected>Select User Type</option>
                         <option value="User">User</option>
                         <option value="CSP">Catering service provider</option>
                     </select>
+                    <div id="cspFields" class="csp-fields">
+                        <input type="text" name="csp_name" placeholder="CSP Name" required>
+                        <hr>
+                        <input type="text" name="address" placeholder="Address" required>
+                        <hr>
+                    </div>
                     <input type="password" name="pswd" class="p" placeholder="Password" required>
                     <hr>
                     <input type="password" name="pswd1" placeholder="Confirm password" required>
                     <hr>
                     <br>
-                    <input class="btn2" type="submit" name="submit" value="Sign In">
+                    <input class="btn2" type="submit" name="submit" value="Sign Up">
                     <p>Already have an account? <a href="login.php">Log In</a></p>
                 </div>
             </form> 
