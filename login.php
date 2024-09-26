@@ -1,58 +1,55 @@
 <?php
-        $dbcon=mysqli_connect("localhost","root","","caterease");
-        if (!$dbcon) {
-            die("Connection failed: " . mysqli_connect_error());
-        }
-        if(isset($_POST['submit']))
-        {
-            $email=$_POST['mail'];
-            $paswrd=$_POST['pswd'];
-            $sql="SELECT * FROM `login` WHERE email='$email' and password ='$paswrd'";
+$dbcon = mysqli_connect("localhost", "root", "", "caterease");
+if (!$dbcon) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($dbcon, $_POST['mail']);
+    $paswrd = mysqli_real_escape_string($dbcon, $_POST['pswd']);
+    
+    $sql = "SELECT * FROM `login` WHERE email='$email' AND password='$paswrd'";
+    $data = mysqli_query($dbcon, $sql);
+    
+    $sql2 = "SELECT * FROM user WHERE email='$email'";
+    $data2 = mysqli_query($dbcon, $sql2);
+    if ($data && $data2) {
+        if (mysqli_num_rows($data) > 0 && mysqli_num_rows($data2) > 0) {
+            $row = mysqli_fetch_assoc($data);
+            $row1 = mysqli_fetch_assoc($data2);
             
-            $data=mysqli_query($dbcon,$sql);
-            $sql2="SELECT * FROM user WHERE email='$email'";
-            $data2=mysqli_query($dbcon,$sql2);
-            if($data $$ $data2)
-            {   
-                $row = mysqli_fetch_assoc($data);
-                $row1 = mysqli_fetch_assoc($data2);
-                if($row){
-                    if($row1['status']==='active')
-                    {
-                        if ($row['user_type'] == 0) {
-                            header('Location: home.html');
-                            exit();
-                        } 
-                        else if ($row['user_type'] == 1) {
-                            header('Location: cspdashboard.php');
-                            exit();
-                        }
-                        else{
-                            header('Location: admindashboard.php');
-                        }
-                    }
-                    else{
-                        echo"<Script>alert('User is blocked')</script>";
-                    }
+            if ($row1['status'] === 'active') {
+                if ($row['user_type'] == 0) {
+                    header('Location: home.html');
+                    exit();
+                } elseif ($row['user_type'] == 1) {
+                    header('Location: cspdashboard.php');
+                    exit();
+                } else {
+                    header('Location: admindashboard.php');
+                    exit();
                 }
-                else{
-                    echo"<Script>alert('User not found')</script>";
-                }
+            } else {
+                echo "<script>alert('User is blocked');</script>";
             }
-            else{
-                echo"<Script>alert('Incorrect email or password')</script>";
-            }
+        } else {
+            echo "<script>alert('User not found');</script>";
         }
-    ?>
+    } else {
+        echo "<script>alert('Incorrect email or password');</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catering service management system</title>
+    <title>Catering Service Management System</title>
     <link rel="stylesheet" href="style/style.css" type="text/css">
     <style>
-        .btn2{
+        .btn2 {
             border: 1px solid #008080;
             border-radius: 20px;
             padding: 8px 20px;
@@ -64,7 +61,7 @@
             margin-bottom: 30px;
             background-color: #008080;
         }
-        .btn2:hover{
+        .btn2:hover {
             background-color: white;
             color: #009879;
             border: 2px solid #009879 !important;
@@ -97,7 +94,7 @@
                     <hr>
                     <br>
                     <input class="btn2" type="submit" name="submit" value="Log In">
-                    <p>Not a Member ?<a href="signup.php">Sign Up</a></p>
+                    <p>Not a Member? <a href="signup.php">Sign Up</a></p>
                 </div>
             </form>
         </div>

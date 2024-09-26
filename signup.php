@@ -5,46 +5,51 @@ if (!$dbcon) {
 }
 
 if (isset($_POST['submit'])) {
-    $name = $_POST['Name'];
-    $phno = $_POST['phno'];
-    $email = $_POST['mail'];
-    $paswrd = $_POST['pswd'];
-    $paswrd1 = $_POST['pswd1'];
+    $name = mysqli_real_escape_string($dbcon, $_POST['Name']);
+    $phno = mysqli_real_escape_string($dbcon, $_POST['phno']);
+    $email = mysqli_real_escape_string($dbcon, $_POST['mail']);
+    $paswrd = mysqli_real_escape_string($dbcon, $_POST['pswd']);
+    $paswrd1 = mysqli_real_escape_string($dbcon, $_POST['pswd1']);
     $type = $_POST['typ'];
 
-    if ($type == 'User') {
-        $usertype = 0;
-        $status = "active";
+    if ($paswrd !== $paswrd1) {
+        echo "<script>alert('Passwords do not match');</script>";
     } else {
-        $usertype = 1;
+        // Determine user type and status
+        $usertype = ($type === 'CSP') ? 'CSP' : 'User';
         $status = "active";
-    }
-    if ($type == 'CSP') {
-        $csp_name = $_POST['csp_name'];
-        $address = $_POST['address'];
-    }
 
-    if ($paswrd == $paswrd1) {
-        $sql = "INSERT INTO user(`name`, `phno`, `email`, `password`, `usertype`,`status`) 
-                VALUES ('$name', '$phno', '$email', '$paswrd', '$type','$status')";
-        $sql2 = "INSERT INTO `login`(`email`, `password`, `user_type`) 
-                 VALUES ('$email', '$paswrd', '$usertype')";
-        if ($type == 'CSP') {
-            $sql3 = "INSERT INTO `csp_table`(`csp_name`, `address`,) 
-                     VALUES ('$csp_name', '$address')";
-            mysqli_query($dbcon, $sql3);
-        }
+        // Insert into user table
+        $sql = "INSERT INTO user (`name`, `phno`, `email`, `password`, `usertype`, `status`) 
+                VALUES ('$name', '$phno', '$email', '$paswrd', '$usertype', '$status')";
         
-        $data = mysqli_query($dbcon, $sql);
-        mysqli_query($dbcon, $sql2);
+        if (mysqli_query($dbcon, $sql)) {
+            $user_id = mysqli_insert_id($dbcon); // Get the ID of the newly inserted user
 
-        if ($data) {
+            // Insert into login table
+            $sql2 = "INSERT INTO `login`(`email`, `password`, `user_type`) 
+                     VALUES ('$email', '$paswrd', '$usertype')";
+            if (!mysqli_query($dbcon, $sql2)) {
+                echo "<script>alert('Error inserting into login table: " . mysqli_error($dbcon) . "');</script>";
+            }
+
+            // If CSP, insert into csp_table
+            if ($type === 'CSP') {
+                $csp_name = mysqli_real_escape_string($dbcon, $_POST['csp_name']);
+                $address = mysqli_real_escape_string($dbcon, $_POST['address']);
+                $sql3 = "INSERT INTO `csp_table`(userid, `csp_name`, `address`) 
+                         VALUES ('$user_id', '$csp_name', '$address')";
+                if (!mysqli_query($dbcon, $sql3)) {
+                    echo "<script>alert('Error inserting into csp_table: " . mysqli_error($dbcon) . "');</script>";
+                }
+            }
+
             echo "<script>alert('Data Inserted');</script>";
             header('Location: login.php');
-            exit(); 
+            exit();
+        } else {
+            echo "<script>alert('Error inserting into user table: " . mysqli_error($dbcon) . "');</script>";
         }
-    } else {
-        echo "<script>alert('Passwords do not match');</script>";
     }
 }
 ?>

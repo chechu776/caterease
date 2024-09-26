@@ -74,15 +74,18 @@
                             die("Connection failed: " . mysqli_connect_error());
                         }
                         $sql = "SELECT * FROM `user` WHERE `usertype` = 'CSP'";
+                        $sql2="SELECT * FROM csp_table";
                         $data = mysqli_query($dbcon, $sql);
+                        $data2 =mysqli_query($dbcon, $sql2);
                         if (mysqli_num_rows($data) > 0) {  
                             while ($row = mysqli_fetch_assoc($data)) {
+                                $row2 = mysqli_fetch_assoc($data2);
                                 $id = $row["userid"];
                                 echo "<tr class='hover'>";
-                                echo "<td>" . htmlspecialchars($row['userid']) . "</td>"; 
-                                echo "<td>" . htmlspecialchars($row['name']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row2['csp_name']) . "</td>"; 
                                 echo "<td>" . htmlspecialchars($row['phno']) . "</td>"; 
                                 echo "<td>" . htmlspecialchars($row['email']) . "</td>"; 
+                                echo "<td>" . htmlspecialchars($row2['address']) . "</td>"; 
                                 echo "<td>";
                                 
                                 if ($row['status'] == "active") {
