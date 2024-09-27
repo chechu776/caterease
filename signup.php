@@ -15,25 +15,19 @@ if (isset($_POST['submit'])) {
     if ($paswrd !== $paswrd1) {
         echo "<script>alert('Passwords do not match');</script>";
     } else {
-        // Determine user type and status
         $usertype = ($type === 'CSP') ? 'CSP' : 'User';
         $status = "active";
 
-        // Insert into user table
         $sql = "INSERT INTO user (`name`, `phno`, `email`, `password`, `usertype`, `status`) 
                 VALUES ('$name', '$phno', '$email', '$paswrd', '$usertype', '$status')";
         
         if (mysqli_query($dbcon, $sql)) {
-            $user_id = mysqli_insert_id($dbcon); // Get the ID of the newly inserted user
-
-            // Insert into login table
+            $user_id = mysqli_insert_id($dbcon);
             $sql2 = "INSERT INTO `login`(`email`, `password`, `user_type`) 
                      VALUES ('$email', '$paswrd', '$usertype')";
             if (!mysqli_query($dbcon, $sql2)) {
                 echo "<script>alert('Error inserting into login table: " . mysqli_error($dbcon) . "');</script>";
             }
-
-            // If CSP, insert into csp_table
             if ($type === 'CSP') {
                 $csp_name = mysqli_real_escape_string($dbcon, $_POST['csp_name']);
                 $address = mysqli_real_escape_string($dbcon, $_POST['address']);
@@ -41,7 +35,7 @@ if (isset($_POST['submit'])) {
                          VALUES ('$user_id', '$csp_name', '$address')";
                 if (!mysqli_query($dbcon, $sql3)) {
                     echo "<script>alert('Error inserting into csp_table: " . mysqli_error($dbcon) . "');</script>";
-                }
+                }  
             }
 
             echo "<script>alert('Data Inserted');</script>";

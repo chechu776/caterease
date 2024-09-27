@@ -19,10 +19,10 @@ if (isset($_POST['submit'])) {
             $row1 = mysqli_fetch_assoc($data2);
             
             if ($row1['status'] === 'active') {
-                if ($row['user_type'] == 0) {
+                if ($row['user_type'] == 'User') {
                     header('Location: home.html');
                     exit();
-                } elseif ($row['user_type'] == 1) {
+                } elseif ($row['user_type'] == 'CSP') {
                     header('Location: cspdashboard.php');
                     exit();
                 } else {

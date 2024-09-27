@@ -94,13 +94,13 @@
                                     <img src='images/block-user.png'> Block</button>";
                                     if($row2['status']=='requested')
                                     {
-                                        echo"<button name='approveuser' class='approve'>Approve</button>";
+                                        echo"<button name='approveuser' type='submit' class='approve'>Approve</button>";
                                     }
+                                    else {}
                                     echo"</form>";
 } else {
                                     echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='unblock'><img src='images/unlock.png'> UnBlock</button></form>";
                                 }
-
                                 echo "</td>";
                                 echo "</tr>";
                             }
@@ -126,5 +126,13 @@
             </table>
         </div>
     </div>
+    <?php
+        if(isset($_POST['approveuser']))
+        {
+            $sql="UPDATE `csp_table` SET `status`=1 WHERE userid=$user_id";
+            //UPDATE `csp_table` SET `status`=1 WHERE userid=111;
+            $result1 = mysqli_query($dbcon, $sql);
+        }
+    ?>
 </body>
 </html>
