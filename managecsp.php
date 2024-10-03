@@ -73,7 +73,7 @@
                         if (!$dbcon) {
                             die("Connection failed: " . mysqli_connect_error());
                         }
-                        $sql = "SELECT * FROM `user` WHERE `usertype` = 'CSP'";
+                        $sql = "SELECT * FROM user WHERE usertype = 'CSP'";
                         $sql2="SELECT * FROM csp_table";
                         $data = mysqli_query($dbcon, $sql);
                         $data2 =mysqli_query($dbcon, $sql2);
@@ -98,7 +98,7 @@
                                     }
                                     else {}
                                     echo"</form>";
-} else {
+                        } else {
                                     echo "<form method='post'><button name='unblockuser' value='{$id}' type='submit' class='unblock'><img src='images/unlock.png'> UnBlock</button></form>";
                                 }
                                 echo "</td>";
@@ -121,16 +121,15 @@
                                 echo "Error updating status: " . mysqli_error($dbcon);
                             }
                         }
-                        mysqli_close($dbcon);
-                        ?>
+                        //mysqli_close($dbcon);
+                    ?>
             </table>
         </div>
     </div>
     <?php
         if(isset($_POST['approveuser']))
         {
-            $sql="UPDATE `csp_table` SET `status`=1 WHERE userid=$user_id";
-            //UPDATE `csp_table` SET `status`=1 WHERE userid=111;
+            $sql="UPDATE csp_table SET status=1 WHERE userid='$id'";
             $result1 = mysqli_query($dbcon, $sql);
         }
     ?>
