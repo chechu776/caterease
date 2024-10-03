@@ -18,7 +18,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="uploadmenu.php">
                     <img src="images/food-service.png" alt="">
                     <span>Upload Menu</span>
                 </a>

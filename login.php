@@ -13,16 +13,19 @@ if (isset($_POST['submit'])) {
     
     $sql2 = "SELECT * FROM user WHERE email='$email'";
     $data2 = mysqli_query($dbcon, $sql2);
+    $sql3 = "SELECT * FROM csp_table";
+    $data3 =mysqli_query($dbcon.$sql3);
     if ($data && $data2) {
         if (mysqli_num_rows($data) > 0 && mysqli_num_rows($data2) > 0) {
             $row = mysqli_fetch_assoc($data);
             $row1 = mysqli_fetch_assoc($data2);
-            
+            $row2 = mysqli_fetch_assoc($data3);
             if ($row1['status'] === 'active') {
                 if ($row['user_type'] == 'User') {
                     header('Location: home.html');
                     exit();
                 } elseif ($row['user_type'] == 'CSP') {
+                    $_SESSION['cspid'] = $row2['csp_id'];
                     header('Location: cspdashboard.php');
                     exit();
                 } else {
