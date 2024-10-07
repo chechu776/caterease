@@ -1,3 +1,29 @@
+<?php
+session_start();
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+    error_reporting(0);
+    
+    // Check if 'id' parameter exists in the URL
+    if (isset($_GET['id'])) {
+        $cspid = $_GET['id'];
+        $_SESSION["cspid"] = $cspid; // Set it in the session
+    }
+    
+    // Use the cspid from the session for further database queries
+    if (isset($_SESSION['cspid'])) {
+        $csp_id = $_SESSION['cspid']; // Now you can use $csp_id
+        // Database connection
+        $dbcon = mysqli_connect("localhost", "root", "", "caterease");
+        $sql3 = "SELECT * FROM csp_table WHERE userid = '$csp_id'";
+        $data3 = mysqli_query($dbcon, $sql3);
+        
+        // Further processing...
+    } else {
+        header("Location: login.php"); // Redirect to login if cspid is not set
+        exit();
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +50,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="manageprofile.php">
                     <img src="images/user.png" alt="">
                     <span>Manage Profile</span>
                 </a>

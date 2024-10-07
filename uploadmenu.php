@@ -83,7 +83,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="manageprofile.php">
                     <img src="images/user.png" alt="">
                     <span>Manage Profile</span>
                 </a>
@@ -113,7 +113,7 @@
       <h2>Add New Menu</h2>
       <form action="" method="post" enctype="multipart/form-data" class="menu-form">
         <label for="Menu-name">Menu Name:</label>
-        <input type="text" id="property-name" name="property_name" required>
+        <input type="text" id="menu-name" name="menu_name" required>
         <label for="description">description:</label>
         <textarea name="description" id="description"></textarea>
         <label for="price">Price:</label>
@@ -124,48 +124,48 @@
     </section>
     </div>
     <?php
-session_start();
-$dbconnect = mysqli_connect("localhost", "root", "", "caterease");
-if (isset($_SESSION['cspid'])) {
-  $csp_id = $_SESSION['cspid']; // Assuming 'user' is where you store user_id in session
-} 
-else {
-  header("Location: uploadmenu.php");
-  exit();
-}
+        session_start();
+        $dbconnect = mysqli_connect("localhost", "root", "", "caterease");
+        if (!$dbconnect) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
 
-if (isset($_POST['submit'])) {
-  $menu_name = $_POST['menu_name'];
-  $description = $_POST['description'];
-  $price = $_POST['price'];
-  $property_image = $_FILES['property_image']['name'];
+        if (isset($_SESSION['cspid'])) {
+            $csp_id = $_SESSION['cspid'];
+        } else {
+            header("Location: login.php");
+            exit();
+        }
 
-  // Check if the property number already exists
-//   $check_property_query = "SELECT * FROM `property` WHERE `property_number` = '$property_number'";
-//   $result = mysqli_query($dbconnect, $check_property_query);
+        if (isset($_POST['submit'])) {
+            $menu_name = $_POST['menu_name'];
+            $description = $_POST['description'];
+            $price = $_POST['price'];
+            $property_image = $_FILES['menu_image']['name'];
+            
+            $target_dir = "image/";
+            $target_file = $target_dir . basename($property_image);
 
-//   if (mysqli_num_rows($result) > 0) {
-//     echo "<script>alert('A property with this number already exists! Please use a unique property number.');</script>";
-//   } else {
-//     // Upload the image to the server
-    $target_dir = "image/";
-    $target_file = $target_dir . basename($_FILES["menu_image"]["name"]);
+            // Check for upload errors
+            if ($_FILES['menu_image']['error'] === UPLOAD_ERR_OK) {
+                // if (move_uploaded_file($target_file)) {
+                    $insert_query = "INSERT INTO `menu` (`csp_id`, `menu_name`, `description`, `price`, `image`) 
+                                    VALUES ('$csp_id', '$menu_name', '$description', '$price', '$target_file')";
 
-    // if (move_uploaded_file($_FILES["menu_image"]["tmp_name"], $target_file)) {
-      // Insert the property into the database
-      $insert_query = "INSERT INTO `menu` (`csp_id`, `menu_name`, `description`, `price`, `image`) 
-                           VALUES ('$csp_id', '$menu_name', '$description', '$price', '$target_file')";
-
-      if (mysqli_query($dbconnect, $insert_query)) {
-        echo "<script>alert('Menu listed successfully!');</script>";
-      } else {
-        echo "<script>alert('Error while listing the Menu.');</script>";
-      }
-    } 
-    // else {
-    //   echo "<script>alert('Failed to upload the image.');</script>";
-    // }
-// }
+                    if (mysqli_query($dbconnect, $insert_query)) {
+                        echo "<script>alert('Menu listed successfully!');</script>";
+                        header("Location: cspdashboard.php?id=$csp_id");
+                        exit();
+                    } else {
+                        echo "<script>alert('Error while listing the Menu.');</script>";
+                    }
+                // } else {
+                //     echo "<script>alert('Failed to upload the image.');</script>";
+                // }
+            } else {
+                echo "<script>alert('Error in file upload.');</script>";
+            }
+        }
 ?>
 </body>
 </html>
